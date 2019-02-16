@@ -1,0 +1,9 @@
+services:
+    queue.task_repository:
+        class: Core\QueueBundle\Entity\Repository\TaskRepositoryInterface
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - Core\QueueBundle\Entity\Task
+    queue.service:
+        class: Core\QueueBundle\Service\QueueService
+        arguments: ['@queue.task_repository', '@service_container', '%queue.max_tasks%']
